@@ -12,4 +12,4 @@ RUN pip install -U --user pip
 ADD ./requirements.txt .
 RUN pip install --upgrade --no-cache-dir -r requirements.txt
 
-CMD ["gunicorn", "canopy_server.app:app", "--worker-class", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:${PORT}", "--workers", "4"]
+CMD ["gunicorn", "canopy_server.app:app", "--worker-class", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:$PORT", "--workers", "2"]
