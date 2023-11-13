@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.10
 
 ENV USER_NAME=app
 
@@ -10,8 +10,8 @@ ENV PATH="/home/$USER_NAME/.local/bin:${PATH}"
 RUN pip install -U --user pip
 
 ADD ./requirements.txt .
-RUN pip install --user --no-cache-dir -r requirements.txt
+RUN pip install --upgrade --no-cache-dir -r requirements.txt
 
 EXPOSE 8000
 
-CMD ["canopy", "start"]
+CMD ["gunicorn", "canopy_server.app:app", "--worker-class", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "--workers", "4"]
