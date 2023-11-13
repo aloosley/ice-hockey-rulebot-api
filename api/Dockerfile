@@ -1,11 +1,16 @@
 FROM python:3.10
 
-RUN adduser -D myuser
-USER myuser
-RUN pip install -U pip
+ENV USER_NAME=app
+
+RUN useradd -ms /bin/bash $USER_NAME
+USER $USER_NAME
+WORKDIR /home/$USER_NAME
+ENV PATH="/home/$USER_NAME/.local/bin:${PATH}"
+
+RUN pip install -U --user pip
 
 ADD ./requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --user --no-cache-dir -r requirements.txt
 
 EXPOSE 8000
 
