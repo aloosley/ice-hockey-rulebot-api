@@ -12,7 +12,7 @@ RUN pip install -U --user pip
 COPY ./requirements.txt .
 RUN pip install --upgrade --no-cache-dir -r requirements.txt
 
-COPY ./*.py .
+COPY ./*.py ./
 
 EXPOSE 8000
 
