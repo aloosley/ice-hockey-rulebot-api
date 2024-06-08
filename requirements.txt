@@ -1,1 +1,5 @@
-canopy-sdk
+fastapi==0.111.0
+openai==1.33
+pandas==2.2.2
+pinecone-client[grpc]==4.1.1
+pydantic==2.5.2
