@@ -10,9 +10,11 @@ ENV PATH="/home/$USER_NAME/.local/bin:${PATH}"
 RUN pip install -U --user pip
 
 COPY ./requirements.txt .
-RUN pip install --upgrade --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
-COPY ./*.py ./
+COPY ./pyproject.toml .
+COPY ./src .
+RUN pip install --upgrade --no-cache-dir --no-deps -e .
 
 EXPOSE 8000
 
