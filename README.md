@@ -1,3 +1,3 @@
-# Ice Hockey Rulebot 
+# Ice Hockey Rulebot API
 
-API and UI.
+

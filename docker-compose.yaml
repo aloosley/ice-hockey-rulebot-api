@@ -1,0 +1,14 @@
+name: icehockey-rulebot-api
+
+services:
+  api:
+    build:
+      context: .
+    env_file: .env
+    ports:
+      - 8000:8000
+    healthcheck:
+      test: curl --fail http://localhost:8000/ready || exit 1
+      interval: 10s
+      timeout: 10s
+      retries: 10

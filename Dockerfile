@@ -1,4 +1,4 @@
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.10
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11-slim
 
 ENV USER_NAME=app
 
@@ -10,9 +10,19 @@ ENV PATH="/home/$USER_NAME/.local/bin:${PATH}"
 RUN pip install -U --user pip
 
 COPY ./requirements.txt .
-RUN pip install --upgrade --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
-COPY ./*.py ./
+COPY ./pyproject.toml .
+COPY ./README.md .
+RUN mkdir src
+COPY ./src/icehockey_rules ./src/icehockey_rules
+RUN pip install --no-cache-dir -e .
+
+COPY ./*.py .
+
+COPY ./data/iihf-qa.yaml ./data/iihf-qa.yaml
+
+COPY ./config/config.yaml ./config/config.yaml
 
 EXPOSE 8000
 

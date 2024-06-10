@@ -2,8 +2,18 @@
 # pycharm
 .idea
 
+# Env
 *env*
 
+# Logging
 *.log
 
+# Python
 __pycache__
+*.egg-info
+
+# Notebooks
+*checkpoint.ipynb
+
+# data
+*.p

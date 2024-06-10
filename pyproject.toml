@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name =  "icehockey_rules"
+authors = [
+    {name = "Alex Loosley", email = "aloosley@alumni.brown.edu"}, ]
+description = "Package for analyzing ice hockey rules."
+readme = "README.md"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.12", ]
+requires-python = ">=3.11.0"
+dynamic = ["version", "dependencies"]
+
+[tool.setuptools.dynamic]
+version = {attr = "icehockey_rules.__version__"}
+dependencies = {file = ["requirements.txt"]}
+
+[tool.setuptools.packages.find]
+where = ["src"]  # list of folders that contain the packages (["."] by default)
+include = ["icehockey_rules*"]  # package names should match these glob patterns (["*"] by default)
+namespaces = false  # to disable scanning PEP 420 namespaces (true by default)
+
+[project.optional-dependencies]
+dev = [
+    "bandit[toml]>=1.7.5",
+    "black>=24.1.0",
+    "codespell>=2.2.6",
+    "check-manifest>=0.49",
+    "jupyter>=1.0.0",
+    "mypy>=1.8.0",
+    "pre-commit>=3.6.0",
+    "pytest>=8.0.0", ]
+
+[project.urls]
+Documentation = "https://github.com/aloosley/ice-hockey-rulebot-api/tree/main#readme"
+Source = "https://github.com/aloosley/ice-hockey-rulebot-api"
