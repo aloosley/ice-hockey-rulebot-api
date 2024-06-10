@@ -2,14 +2,14 @@ from icehockey_rules.chat import query_to_rag_prompt, SYSTEM_PROMPT
 from icehockey_rules.retrieve import openai_client
 
 
-def one_off_question_answer(query: str) -> str:
+def one_off_question_answer(query: str, model: str = "gpt-4-turbo", temperature: float = 0.0, system_prompt: str = SYSTEM_PROMPT) -> str:
     rag_prompt = query_to_rag_prompt(query)
     completion = openai_client.chat.completions.create(
-        model="gpt-4-turbo",
+        model=model,
         messages=[
-            dict(role="system", content=SYSTEM_PROMPT),
+            dict(role="system", content=system_prompt),
             dict(role="user", content=rag_prompt),
         ],
-        temperature=0.0
+        temperature=temperature
     )
     return completion.choices[0].message.content
