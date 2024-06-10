@@ -75,8 +75,6 @@ class Config(YamlBaseSettings):
     embedder: Embedder
     splitter: Splitter
 
-    system_prompt: str
-
     @computed_field
     @property
     def rulebooks_filepath(self) -> Path:
