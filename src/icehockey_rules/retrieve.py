@@ -30,7 +30,7 @@ PINECONE_INDEX =  pinecone_client.Index(INDEX_NAME)
 
 if PINECONE_INDEX.describe_index_stats()["total_vector_count"] != len(inmem_chunked_iihf_rulebook_index):
     raise IndexError(
-        f"Pinecone index with name {INDEX_NAME} has {PINECONE_INDEX.describe_index_stats()["total_vector_count"]} "
+        f"Pinecone index with name {INDEX_NAME} has {PINECONE_INDEX.describe_index_stats()['total_vector_count']} "
         f"vectors, but loaded and chunked rulebook has {len(inmem_chunked_iihf_rulebook_index)} entrys. Something is wrong. "
         f"If the parsing or rulebook structure was changed, you might have to re-embed and index (see notebooks)."
     )

@@ -36,8 +36,6 @@ dev = [
     "mypy>=1.8.0",
     "pre-commit>=3.6.0",
     "pytest>=8.0.0", ]
-build_index = [
-    "langchain-text-splitters>=0.2.1", ]
 
 [project.urls]
 Documentation = "https://github.com/aloosley/ice-hockey-rulebot-api/tree/main#readme"

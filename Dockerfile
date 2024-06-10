@@ -14,8 +14,15 @@ RUN pip install -r requirements.txt
 
 COPY ./pyproject.toml .
 COPY ./README.md .
-COPY ./src .
+RUN mkdir src
+COPY ./src/icehockey_rules ./src/icehockey_rules
 RUN pip install --no-cache-dir -e .
+
+COPY ./*.py .
+
+COPY ./data/iihf-qa.yaml ./data/iihf-qa.yaml
+
+COPY ./config/config.yaml ./config/config.yaml
 
 EXPOSE 8000
 
