@@ -1,4 +1,3 @@
-
 # pycharm
 .idea
 
@@ -17,3 +16,6 @@ __pycache__
 
 # data
 *.p
+
+# MacOS
+.DS_Store
