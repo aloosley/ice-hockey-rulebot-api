@@ -1,3 +1,5 @@
+__version__ = "v1"
+
 from pathlib import Path
 from typing import Any
 
@@ -21,8 +23,8 @@ def get_rulebooks(rulebooks_filepath: Path = config.rulebooks_filepath) -> dict[
 def _validate_rulebooks(rulebook: dict[str, Any]) -> None:
     ids = []
     for rule in rulebook["iihf"]["rules"]:
-        if "situation" in rule:
-            for situation in rule["situation"]:
+        if "query" in rule:
+            for situation in rule["query"]:
                 ids.append(situation["number"])
 
         for subsection in rule["subsections"]:
@@ -102,7 +104,7 @@ def _get_iihf_situation_records(rule: dict[str, Any], source: str = SOURCE) -> l
         dict(
             id=str(situation["number"]) + "-QA",
             metadata=dict(
-                type="situation",
+                type="query",
                 title=rule["title"],
                 parsed_title=rule["title"],
                 text=f"SITUATION:\n{situation['question']}\n\nRESPONSE:\n{situation['answer']}",
@@ -178,3 +180,19 @@ def _replace_list_elements_with_lists(
         list_size_diff += len(list_to_insert) - 1
 
     return original_list
+
+
+def get_inmem_chunked_iihf_rulebook_index() -> dict[str, Any]:
+    """IIHF rulebook chunks keyed by chunk id"""
+    return {
+        rule_chunk["id"]: rule_chunk["metadata"]
+        for rule_chunk in get_chunked_iihf_rulebook_records(get_rulebooks()["iihf"])
+    }
+
+
+def get_inmem_iihf_rulebook_index() -> dict[str, Any]:
+    """IIHF rulebook rules keyed by rule number"""
+    return {
+        str(rule["number"]): rule
+        for rule in get_rulebooks()["iihf"]["rules"]
+    }

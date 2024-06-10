@@ -40,6 +40,11 @@ class LLM(BaseModel):
     temperature: Annotated[float, Field(ge=0.0, le=1.0)]
 
 
+class Retriever(BaseModel):
+    top_k_chunks: Annotated[int, Field(gt=0)]
+    top_k_rules: Annotated[int, Field(gt=0)]
+
+
 class Embedder(BaseModel):
     model: str
 
@@ -66,6 +71,7 @@ class Config(YamlBaseSettings):
     rulebooks_location: str
 
     llm: LLM
+    retriever: Retriever
     embedder: Embedder
     splitter: Splitter
 

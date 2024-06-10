@@ -3,9 +3,11 @@ rulebooks_location: data_dir/iihf-qa.yaml
 llm:
   model: gpt-4-turbo-2024-04-09
   temperature: 0.0
+retriever:
+  top_k_chunks: 10
+  top_k_rules: 10
 embedder:
   model: text-embedding-3-small
-
 splitter:
   max_chunk_size: 500
   chunk_overlap: 100
