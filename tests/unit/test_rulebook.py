@@ -1,17 +1,18 @@
-from icehockey_rules.rulebook import get_rulebooks, get_iihf_rulebook_records, _replace_list_elements_with_lists
+from icehockey_rules.rulebook import get_rulebooks, _replace_list_elements_with_lists, \
+    get_chunked_iihf_rulebook_records
 
 
 def test_get_rulebook() -> None:
     assert get_rulebooks()
 
 
-def test_get_iihf_rulebook_records() -> None:
+def test_get_chunked_iihf_rulebook_records() -> None:
     # GIVEN
     rulebooks = get_rulebooks()
     iihf_rulebook = rulebooks["iihf"]
 
     # WHEN
-    iihf_rulebook_records = get_iihf_rulebook_records(iihf_rulebook)
+    iihf_rulebook_records = get_chunked_iihf_rulebook_records(iihf_rulebook)
 
     # THEN
     assert len(iihf_rulebook_records) == 1126

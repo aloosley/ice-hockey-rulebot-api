@@ -4,9 +4,7 @@ from typing import Any
 import pandas as pd
 import yaml
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from tqdm import tqdm
 
-from icehockey_rules import data_dir
 from icehockey_rules.config import get_config
 
 config = get_config()
@@ -118,10 +116,10 @@ def _get_iihf_situation_records(rule: dict[str, Any], source: str = SOURCE) -> l
     ]
 
 
-def get_iihf_rulebook_records(iihf_rulebook: dict[str, Any]) -> list[dict[str, Any]]:
+def get_chunked_iihf_rulebook_records(iihf_rulebook: dict[str, Any]) -> list[dict[str, Any]]:
     iihf_rulebook_records = []
 
-    for rule in tqdm(iihf_rulebook["rules"]):
+    for rule in iihf_rulebook["rules"]:
         iihf_rulebook_records += _get_iihf_subsection_records(rule)
         iihf_rulebook_records += _get_iihf_situation_records(rule)
 
@@ -132,15 +130,17 @@ def get_iihf_rulebook_records(iihf_rulebook: dict[str, Any]) -> list[dict[str, A
         is_separator_regex=False,
     )
 
-    return _split_iihf_rulebook_records(
+    return _splitsert_iihf_rulebook_records(
         iihf_rulebook_records=iihf_rulebook_records,
         text_splitter=text_splitter,
     )
 
 
-def _split_iihf_rulebook_records(iihf_rulebook_records: list[dict[str, Any]], text_splitter: RecursiveCharacterTextSplitter) -> list[dict[str, Any]]:
+def _splitsert_iihf_rulebook_records(iihf_rulebook_records: list[dict[str, Any]], text_splitter: RecursiveCharacterTextSplitter) -> list[dict[str, Any]]:
+    """Split using text_splitter and insert new records.
+    """
     rule_record_chunks: dict[int, list[dict[str, Any]]] = {}
-    for rule_record_idx, rule_record in tqdm(enumerate(iihf_rulebook_records)):
+    for rule_record_idx, rule_record in enumerate(iihf_rulebook_records):
         text = rule_record["metadata"]["text"]
         if len(text) > text_splitter._chunk_size:
             rule_record_chunks[rule_record_idx] = [
