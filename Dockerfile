@@ -1,4 +1,4 @@
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.10
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11-slim
 
 ENV USER_NAME=app
 
@@ -13,8 +13,9 @@ COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY ./pyproject.toml .
+COPY ./README.md .
 COPY ./src .
-RUN pip install --upgrade --no-cache-dir --no-deps -e .
+RUN pip install --no-cache-dir -e .
 
 EXPOSE 8000
 

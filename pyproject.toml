@@ -1,9 +1,9 @@
 [build-system]
-requires = ["flit"]
-build-backend = "flit.buildapi"
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
 
 [project]
-name =  "icehockey-rules"
+name =  "icehockey_rules"
 authors = [
     {name = "Alex Loosley", email = "aloosley@alumni.brown.edu"}, ]
 description = "Package for analyzing ice hockey rules."
@@ -14,10 +14,17 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.12", ]
-requires-python = ">=3.12.0"
-dynamic = ["version"]
+requires-python = ">=3.11.0"
+dynamic = ["version", "dependencies"]
+
+[tool.setuptools.dynamic]
+version = {attr = "icehockey_rules.__version__"}
 dependencies = {file = ["requirements.txt"]}
 
+[tool.setuptools.packages.find]
+where = ["src"]  # list of folders that contain the packages (["."] by default)
+include = ["icehockey_rules*"]  # package names should match these glob patterns (["*"] by default)
+namespaces = false  # to disable scanning PEP 420 namespaces (true by default)
 
 [project.optional-dependencies]
 dev = [
@@ -30,11 +37,8 @@ dev = [
     "pre-commit>=3.6.0",
     "pytest>=8.0.0", ]
 build_index = [
-    "langchain-text-splitters>=0.2.1"]
+    "langchain-text-splitters>=0.2.1", ]
 
 [project.urls]
 Documentation = "https://github.com/aloosley/ice-hockey-rulebot-api/tree/main#readme"
 Source = "https://github.com/aloosley/ice-hockey-rulebot-api"
-
-[tool.flit.module]
-name = "icehockey_rules"
