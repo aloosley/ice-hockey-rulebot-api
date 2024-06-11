@@ -45,21 +45,21 @@ def _rule_number_to_prompt(rule_number: str) -> str:
     rule = inmem_iihf_rulebook_index[rule_number]
 
     rule_prompt = f"""
-    [RULE {rule_number}: {rule["title"]}]:
+    RULE {rule_number}. {rule["title"]}:
     """
     for subsection in rule["subsections"]:
         rule_prompt += f"""
-        [{subsection["number"]}: {subsection["title"]}]:
+        {subsection["number"]}. {subsection["title"]}:
         {subsection["rule"]}"""
 
     situations = rule.get("situations", [])
     if len(situations):
         rule_prompt += f"""
-    [RULE {rule_number} SITUATIONS]:
+    RULE {rule_number} SITUATIONS:
         """
     for situation in situations:
         rule_prompt += f"""
-        [SITUATION {situation["number"]}]: 
+        SITUATION {situation["number"]}: 
 
             QUESTION: {situation["question"]}
             ANSWER: {situation["answer"]}"""
