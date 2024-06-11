@@ -52,7 +52,7 @@ def retrieve(query: str, top_k: int, index: Index = PINECONE_INDEX) -> QueryResp
 
 
 def chunk_matches_to_rules_df(
-    matches: list[str, Any], top_k_rules: int = 10, rule_score_threshold: float = 0.53
+    matches: list[str, Any], top_k_rules: int = 10, rule_score_threshold: float = 0.4
 ) -> pd.DataFrame:
     """Input QueryResponse.matches list of chunk records, and get rules and scores back."""
     df = (

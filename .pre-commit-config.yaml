@@ -52,9 +52,9 @@ repos:
       - id: check-docstring-first
       - id: debug-statements
       - id: end-of-file-fixer
-        exclude: data/*
+        exclude: data/iihf-qa.yaml
       - id: trailing-whitespace
-        exclude: data/*
+        exclude: data/iihf-qa.yaml
       - id: check-ast
       - id: check-builtin-literals
       - id: detect-private-key

@@ -23,8 +23,8 @@ some potentially relevant rules:" followed by a list the RULE numbers and titles
 def query_to_rag_prompt(
     query: str,
     top_k_chunks: int = 10,
-    top_k_rules: int = 5,
-    rule_score_threshold: float = 0.53,
+    top_k_rules: int = 6,
+    rule_score_threshold: float = 0.3,
 ) -> str:
 
     chunk_matches = retrieve(query=query, top_k=top_k_chunks).matches
