@@ -49,7 +49,7 @@ def retrieve(query: str, top_k: int, index: Index = PINECONE_INDEX) -> QueryResp
     )
 
 
-def chunk_matches_to_rules_df(matches: list[str, Any]) -> pd.DataFrame:
+def chunk_matches_to_rules_df(matches: list[str, Any], top_k_rules: int = 10, rule_score_threshold: float = 0.53) -> pd.DataFrame:
     """Input QueryResponse.matches list of chunk records, and get rules and scores back."""
     df = pd.DataFrame(
         [
@@ -58,5 +58,7 @@ def chunk_matches_to_rules_df(matches: list[str, Any]) -> pd.DataFrame:
         ],
         columns=["rule_number", "score"]
     ).groupby(["rule_number"]).agg(dict(score=["sum", "count"])).sort_values(("score", "sum"), ascending=False)
+    df = df[:top_k_rules]
+    df = df[df["score"]["sum"] > rule_score_threshold]
     df["title"] = df.index.map(lambda rule_number: inmem_iihf_rulebook_index[rule_number]["title"])
     return df

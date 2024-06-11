@@ -1,13 +1,13 @@
 __version__ = "v1"
 
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
 import pandas as pd
 import yaml
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-
 from icehockey_rules.config import get_config
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 config = get_config()
 
@@ -182,6 +182,7 @@ def _replace_list_elements_with_lists(
     return original_list
 
 
+@lru_cache
 def get_inmem_chunked_iihf_rulebook_index() -> dict[str, Any]:
     """IIHF rulebook chunks keyed by chunk id"""
     return {
@@ -190,6 +191,7 @@ def get_inmem_chunked_iihf_rulebook_index() -> dict[str, Any]:
     }
 
 
+@lru_cache
 def get_inmem_iihf_rulebook_index() -> dict[str, Any]:
     """IIHF rulebook rules keyed by rule number"""
     return {

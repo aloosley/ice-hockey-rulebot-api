@@ -15,6 +15,9 @@ def test_get_chunked_iihf_rulebook_records() -> None:
     iihf_rulebook_records = get_chunked_iihf_rulebook_records(iihf_rulebook)
 
     # THEN
+    boarding_minor_penalty_subsection = iihf_rulebook_records[793]
+    assert boarding_minor_penalty_subsection["metadata"]["title"] == "MINOR PENALTY"
+    assert boarding_minor_penalty_subsection["metadata"]["parsed_title"] == "BOARDING - MINOR PENALTY"
     assert len(iihf_rulebook_records) == 1126
 
 
