@@ -66,7 +66,9 @@ class Config(YamlBaseSettings):
     See Pydantic BaseSettings and/or FastAPI documentation for more information.
     """
 
-    model_config = SettingsConfigDict(yaml_file=CONFIG_FILEPATH, strict=True, env_nested_delimiter="__")
+    model_config = SettingsConfigDict(
+        yaml_file=CONFIG_FILEPATH, strict=True, env_nested_delimiter="__"
+    )
 
     rulebooks_location: str
 
@@ -87,7 +89,9 @@ class Config(YamlBaseSettings):
         if rulebooks_filepath.exists():
             return rulebooks_filepath
 
-        raise ValueError(f"Could not resolve rulebooks filepath for {self.rulebooks_location}.")
+        raise ValueError(
+            f"Could not resolve rulebooks filepath for {self.rulebooks_location}."
+        )
 
 
 @lru_cache

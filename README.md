@@ -1,3 +1,1 @@
 # Ice Hockey Rulebot API
-
-

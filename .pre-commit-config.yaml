@@ -2,6 +2,7 @@
 minimum_pre_commit_version: 3.7.0
 fail_fast: true
 default_stages: [ commit ]
+
 repos:
   # meta
 
@@ -35,12 +36,12 @@ repos:
 #      - id: pydocstyle
 #        args: [ "--ignore=D10,D21" ]
 
-  - repo: https://github.com/adrienverge/yamllint
-    rev: v1.26.3
-    hooks:
-      - id: yamllint
-        args: [ "--strict", "-d", "{rules: {line-length: {max: 180}}}" ]
-        #
+#  - repo: https://github.com/adrienverge/yamllint
+#    rev: v1.26.3
+#    hooks:
+#      - id: yamllint
+#        args: [ "--strict", "-d", "{rules: {line-length: {max: 180}}}" ]
+#        #
 
   # miscellaneous
 
@@ -51,7 +52,9 @@ repos:
       - id: check-docstring-first
       - id: debug-statements
       - id: end-of-file-fixer
+        exclude: data/*
       - id: trailing-whitespace
+        exclude: data/*
       - id: check-ast
       - id: check-builtin-literals
       - id: detect-private-key

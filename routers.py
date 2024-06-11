@@ -13,4 +13,8 @@ async def one_off_situation(
     query: str,
     config: Config = Depends(get_config),
 ) -> dict[str, Any]:
-    return dict(one_off_question_answer(query=query, model=config.llm.model, temperature=config.llm.temperature))
+    return dict(
+        one_off_question_answer(
+            query=query, model=config.llm.model, temperature=config.llm.temperature
+        )
+    )
