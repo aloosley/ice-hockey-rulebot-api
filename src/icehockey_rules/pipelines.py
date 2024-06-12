@@ -6,11 +6,11 @@ from openai.types.chat import ChatCompletionMessage
 
 def one_off_question_answer(
     query: str,
-    model: str = "gpt-4-turbo",
-    temperature: float = 0.0,
-    top_k_chunks: int = 10,
-    top_k_rules: int = 6,
-    rule_score_threshold: float = 0.4,
+    llm_model: str,
+    llm_temperature: float,
+    top_k_chunks: int,
+    top_k_rules: int,
+    rule_score_threshold: float,
     system_prompt: str = SYSTEM_PROMPT,
 ) -> ChatCompletionMessage:
     rag_prompt = query_to_rag_prompt(
@@ -20,11 +20,11 @@ def one_off_question_answer(
         rule_score_threshold=rule_score_threshold,
     )
     completion = openai_client.chat.completions.create(
-        model=model,
+        model=llm_model,
         messages=[
             dict(role="system", content=system_prompt),
             dict(role="user", content=rag_prompt),
         ],
-        temperature=temperature,
+        temperature=llm_temperature,
     )
     return completion.choices[0].message
