@@ -1,7 +1,6 @@
 from typing import Any
 
 from fastapi import Depends, APIRouter
-
 from icehockey_rules.config import Config, get_config
 from icehockey_rules.pipelines import one_off_question_answer
 

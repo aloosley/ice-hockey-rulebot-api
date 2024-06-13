@@ -1,4 +1,4 @@
-from typing import Iterable
+from typing import Iterable, Optional
 
 import pandas as pd
 
@@ -15,8 +15,10 @@ inmem_iihf_rulebook_index = get_inmem_iihf_rulebook_index()
 SYSTEM_PROMPT = """You are an ice hockey rule assistant.
 Given a question or situation, describe what the rules indicate should happen using only the context provided.
 Always source the associated rule number and title in the context.
-If you cannot answer based on the context, respond with "I couldn't come up with an answer, but here are
-some potentially relevant rules:" followed by a list the RULE numbers and titles found in the context.
+If you cannot answer based on the context, respond with
+"I couldn't come up with an answer that I felt very sure about based on the rule- and casebook, but here are some
+potentially relevant rules you should look into: "
+followed by a list the RULE numbers and titles found in the context.
 """
 
 
@@ -34,15 +36,24 @@ def query_to_rag_prompt(
         rule_score_threshold=rule_score_threshold,
     )
     rule_numbers = rule_matches_df.index
-    return get_rag_prompt(query=query, rule_numbers=rule_numbers)
+    return get_rag_prompt(
+        query=query,
+        rule_numbers=rule_numbers,
+        rule_scores=rule_matches_df["score"]["sum"],
+    )
 
 
-def get_rag_prompt(query: str, rule_numbers: Iterable[str]) -> str:
+def get_rag_prompt(
+    query: str, rule_numbers: list[str], rule_scores: Optional[Iterable[float]] = None
+) -> str:
+    if rule_scores is None:
+        rule_scores = [""] * len(rule_numbers)
+
     rag_prompt = f"""
 CONTEXT:
     """
-    for rule_number in rule_numbers:
-        rag_prompt += _rule_number_to_prompt(rule_number)
+    for rule_number, rule_score in zip(rule_numbers, rule_scores):
+        rag_prompt += _rule_number_to_prompt(rule_number=rule_number)
 
     rag_prompt += f"""
 SITUATION: {query}
