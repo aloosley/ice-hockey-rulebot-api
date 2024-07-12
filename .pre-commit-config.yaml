@@ -76,12 +76,26 @@ repos:
 
   # linters
 #
-#  - repo: local
-#    hooks:
+  - repo: local
+    hooks:
+      - id: pytest
+        name: pytest
+        stages: [ push ]
+        language: system
+        entry: pytest
+        pass_filenames: false
+
 #      - id: mypy
 #        name: mypy
-#        entry: mypy -p continuous_kleinberg --strict --pretty --show-error-codes --namespace-packages
+#        entry: >
+#          mypy --strict --pretty --show-error-codes src
+#        args: [ "--ignore-missing-imports" ]
 #        types: [ python ]
 #        language: system
 #        pass_filenames: false
-#        require_series: true
+
+      - id: jupyter-nb-clear-output
+        name: jupyter-nb-clear-output
+        files: \.ipynb$
+        language: system
+        entry: jupyter nbconvert --ClearOutputPreprocessor.enabled=True --inplace
