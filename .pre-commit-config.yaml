@@ -82,7 +82,7 @@ repos:
         name: pytest
         stages: [ push ]
         language: system
-        entry: pytest packages -m "not slow and not cha_ching"
+        entry: pytest
         pass_filenames: false
 
 #      - id: mypy
