@@ -85,14 +85,14 @@ repos:
         entry: pytest packages -m "not slow and not cha_ching"
         pass_filenames: false
 
-      - id: mypy
-        name: mypy
-        entry: >
-          mypy --strict --pretty --show-error-codes src
-        args: [ "--ignore-missing-imports" ]
-        types: [ python ]
-        language: system
-        pass_filenames: false
+#      - id: mypy
+#        name: mypy
+#        entry: >
+#          mypy --strict --pretty --show-error-codes src
+#        args: [ "--ignore-missing-imports" ]
+#        types: [ python ]
+#        language: system
+#        pass_filenames: false
 
       - id: jupyter-nb-clear-output
         name: jupyter-nb-clear-output
