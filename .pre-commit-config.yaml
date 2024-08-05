@@ -78,13 +78,6 @@ repos:
 #
   - repo: local
     hooks:
-      - id: pytest
-        name: pytest
-        stages: [ push ]
-        language: system
-        entry: pytest
-        pass_filenames: false
-
 #      - id: mypy
 #        name: mypy
 #        entry: >
