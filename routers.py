@@ -32,10 +32,10 @@ async def one_off_situation(
     )
 
 
-retrieval_router = APIRouter()
+context_router = APIRouter()
 
 
-@retrieval_router.post(path="/retrievals", status_code=200)
+@context_router.post(path="/vector_search/retrieve/v1", status_code=200)
 async def rule_retrieval(
     query: str,
     top_k_rules: int = DEFAULT_TOP_K_RULES,
