@@ -1,4 +1,4 @@
-from icehockey_rules.chat import query_to_rag_prompt, SYSTEM_PROMPT
+from icehockey_rules.chat import query_to_retrieved_rules_and_rag_prompt, SYSTEM_PROMPT
 from icehockey_rules.retrieve import openai_client
 
 from openai.types.chat import ChatCompletionMessage
@@ -13,7 +13,7 @@ def one_off_question_answer(
     rule_score_threshold: float,
     system_prompt: str = SYSTEM_PROMPT,
 ) -> ChatCompletionMessage:
-    rag_prompt = query_to_rag_prompt(
+    rule_matches_df, rag_prompt = query_to_retrieved_rules_and_rag_prompt(
         query,
         top_k_chunks=top_k_chunks,
         top_k_rules=top_k_rules,
