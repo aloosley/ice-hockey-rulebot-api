@@ -1,3 +1,4 @@
+import json
 from typing import Any
 
 from fastapi import Depends, APIRouter
@@ -43,8 +44,10 @@ async def rule_retrieval(
     config: Config = Depends(get_config),
 ) -> dict[str, Any]:
     chunk_matches = retrieve(query=query, top_k=config.retriever.top_k_chunks).matches
-    return chunk_matches_to_rules_df(
-        chunk_matches,
-        top_k_rules=top_k_rules,
-        rule_score_threshold=rule_score_threshold,
-    ).to_dict()
+    return json.loads(
+        chunk_matches_to_rules_df(
+            chunk_matches,
+            top_k_rules=top_k_rules,
+            rule_score_threshold=rule_score_threshold,
+        ).to_json()
+    )
