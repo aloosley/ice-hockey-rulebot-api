@@ -13,13 +13,25 @@ INDEX_NAME=iihf-rulebook
 API_KEY=xxxx  # Password protection for API (just use one letter like "a" for testing)
 ```
 
-### Running the API
-Run
-```cmd
-docker compose up --build
-```
+# Getting Started
 
-and head to <http://localhost:8000/docs> to see the API documentation.
+## Start the App
+1. Ensure Docker is installed
+1. Run
+   ```commandline
+   docker compose up --build
+   ```
+1. The app will be available at <http://localhost:8000>
+
+## Taskfile
+Using the Taskfile CLI gives a list of scripts for installing and running.
+Here are instructions for [installing task](https://taskfile.dev/installation/).
+
+Once installed, simply run
+```commandline
+task
+```
+for a list of all available tasks.
 
 ## Development and Experiments
 * Install the dev dependencies: `pip install -e ".[dev]"`

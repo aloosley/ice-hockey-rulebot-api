@@ -1,7 +1,7 @@
 from fastapi import Depends, FastAPI
 
-from routers import chat_router, context_router
-from auth import get_api_key
+from icehockey_rules.routers import chat_router, context_router
+from icehockey_rules.auth import get_api_key
 
 
 app = FastAPI()
