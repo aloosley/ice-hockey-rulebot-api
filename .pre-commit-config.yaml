@@ -24,7 +24,7 @@ repos:
     hooks:
       - id: pytest
         name: pytest
-        entry: pytest
+        entry: pytest -m "not integration"
         language: system
         types: [ python ]
         pass_filenames: false  # or use with: require_serial
