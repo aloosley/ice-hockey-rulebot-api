@@ -26,4 +26,4 @@ COPY ./config/config.yaml ./config/config.yaml
 
 EXPOSE 8000
 
-CMD ["gunicorn", "app:app", "--worker-class", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "--workers", "2"]
+CMD ["gunicorn", "src.icehockey_rules.app:app", "--worker-class", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "--workers", "2"]

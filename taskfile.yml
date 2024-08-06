@@ -1,0 +1,42 @@
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - task -l
+
+  install-locally:
+    desc: Install requirements locally
+    cmds:
+      - pip install -e .
+
+  install-locally-dev:
+    desc: Install developer requirements locally
+    cmds:
+      - pip install -e ".[dev]"
+      - pre-commit install -t pre-commit -t pre-push
+
+  start-locally:
+    desc: Start the app locally (then use localhost:8000)
+    cmds:
+      - uvicorn src.icehockey_rules.app:app --reload
+
+  build:
+    desc: Build the app
+    cmds:
+      - docker compose build
+
+  start:
+    desc: Start the app in docker container (then use localhost:8000)
+    cmds:
+      - docker compose up --build -d
+
+  stop:
+    desc: Stop the app
+    cmds:
+      - docker compose down -v
+
+  test-locally:
+    desc: Run tests locally
+    cmds:
+      - pytest

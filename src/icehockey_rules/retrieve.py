@@ -1,4 +1,5 @@
 import os
+import re
 from typing import Any
 
 import pandas as pd
@@ -52,27 +53,32 @@ def retrieve(query: str, top_k: int, index: Index = PINECONE_INDEX) -> QueryResp
 
 
 def chunk_matches_to_rules_df(
-    matches: list[str, Any], top_k_rules: int = 10, rule_score_threshold: float = 0.4
+    matches: list[dict[str, Any]],
+    top_k_rules: int = 10,
+    rule_score_threshold: float = 0.4,
 ) -> pd.DataFrame:
     """Input QueryResponse.matches list of chunk records, and get rules and scores back."""
-    df = (
+    sorted_rule_scores = (
         pd.DataFrame(
             [
                 (
+                    re.sub(r"-[\d]+", "", match["id"]),
                     inmem_chunked_iihf_rulebook_index[match["id"]]["rule_number"],
                     match["score"],
                 )
                 for match in matches
             ],
-            columns=["rule_number", "score"],
+            columns=["chunk_id", "rule_number", "score"],
         )
         .groupby(["rule_number"])
-        .agg(dict(score=["sum", "count"]))
+        .agg(dict(score=["sum", "count"], chunk_id=["unique"]))
         .sort_values(("score", "sum"), ascending=False)
     )
-    df = df[:top_k_rules]
-    df = df[df["score"]["sum"] > rule_score_threshold]
-    df["title"] = df.index.map(
+    sorted_rule_scores = sorted_rule_scores[:top_k_rules]
+    sorted_rule_scores = sorted_rule_scores[
+        sorted_rule_scores["score"]["sum"] > rule_score_threshold
+    ]
+    sorted_rule_scores["title"] = sorted_rule_scores.index.map(
         lambda rule_number: inmem_iihf_rulebook_index[rule_number]["title"]
     )
-    return df
+    return sorted_rule_scores

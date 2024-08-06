@@ -22,12 +22,12 @@ followed by a list the RULE numbers and titles found in the context.
 """
 
 
-def query_to_rag_prompt(
+def query_to_retrieved_rules_and_rag_prompt(
     query: str,
     top_k_chunks: int = 10,
     top_k_rules: int = 6,
     rule_score_threshold: float = 0.3,
-) -> str:
+) -> tuple[pd.DataFrame, str]:
 
     chunk_matches = retrieve(query=query, top_k=top_k_chunks).matches
     rule_matches_df: pd.DataFrame = chunk_matches_to_rules_df(
@@ -36,7 +36,7 @@ def query_to_rag_prompt(
         rule_score_threshold=rule_score_threshold,
     )
     rule_numbers = rule_matches_df.index
-    return get_rag_prompt(
+    return rule_matches_df, get_rag_prompt(
         query=query,
         rule_numbers=rule_numbers,
         rule_scores=rule_matches_df["score"]["sum"],
