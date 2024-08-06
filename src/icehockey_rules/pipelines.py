@@ -1,3 +1,5 @@
+import json
+
 from icehockey_rules.chat import query_to_retrieved_rules_and_rag_prompt, SYSTEM_PROMPT
 from icehockey_rules.retrieve import openai_client
 
@@ -27,4 +29,6 @@ def one_off_question_answer(
         ],
         temperature=llm_temperature,
     )
-    return completion.choices[0].message
+    message = completion.choices[0].message
+    message.rule_matches_df = json.loads(rule_matches_df.to_json(orient="index"))
+    return message

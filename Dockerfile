@@ -18,8 +18,6 @@ RUN mkdir src
 COPY ./src/icehockey_rules ./src/icehockey_rules
 RUN pip install --no-cache-dir -e .
 
-COPY ./*.py ./
-
 COPY ./data/iihf-qa.yaml ./data/iihf-qa.yaml
 
 COPY ./config/config.yaml ./config/config.yaml
